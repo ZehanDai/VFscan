@@ -19,6 +19,7 @@ bash
 git clone https://github.com/yourusername/VFscan.git
 cd VFscan
 ```
+unzip all zip files in the database path
 
 ### 2. Set the VFSCAN environment variable
 Add the following line to your ~/.bashrc (or equivalent shell config file):
