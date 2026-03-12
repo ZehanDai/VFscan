@@ -32,18 +32,13 @@ def interpret_escape_sequences(value):
 for opt_name,opt_value in opts:
   if opt_name in ('-i'):
     inf=opt_value
-    #print('input file =',inf)
   elif opt_name in ('-o'):
     ouf=opt_value
-    #print('outfile table =',ouf)
   elif opt_name in ('-s'):
-    #insep=opt_value
     insep=interpret_escape_sequences(opt_value)
-    #print("input delitmmer",insep)
   elif opt_name in ('-S'):
     outsep=opt_value
     outsep=interpret_escape_sequences(outsep)
-    #print("output delitmmer",outsep)
   elif opt_name in ('-h','--help'):
     print(' '.join([
         'python3 blast-best_hit_calling2.py \\\n',
@@ -56,11 +51,6 @@ for opt_name,opt_value in opts:
 label = 'original' # 'bn' or 'original'
 
 def check_global_alignment(hit_rows): 
-    #if len(pd.unique(df['#bn_query'])) != 1:
-    #    raise ValueError("bn_query列的值不唯一")
-
-    #if len(pd.unique(df['saccver'])) != 1 :
-    #    raise ValueError("saccver列有多个不同值")
     max_score = hit_rows['scov'].max()
     max_rows = hit_rows[hit_rows['scov'] == max_score].iloc[[0]]
     return max_rows
@@ -107,9 +97,7 @@ def merge_regions(df):
     
   # 转换为DataFrame
   output_df = pd.DataFrame(merged_intervals, columns=['sstart', 'send'])
-  
   #print("合并后的不重叠区间：")
-  #print(output_df)
   
   # 计算总长度
   total_length = (output_df['send'] - output_df['sstart'] + 1).sum()  
@@ -123,8 +111,6 @@ def cal_coverage(data, gene_size):
     
     # 计算覆盖度
     coverage = total_covered / gene_size
-    #print('coverage', coverage)
-
     return coverage, total_covered
 
 def test_merge_region():
@@ -142,7 +128,6 @@ def test_merge_region():
     interval_strings = data.apply(lambda row: f"{row['sstart']}-{row['send']}", axis=1)
     result = ";".join(interval_strings)
     #print('result', result)
-
 #test_merge_region()
 #exit()
 
@@ -151,16 +136,11 @@ def main_bn(df):
   
   # main run base name mode
   cols = list(df.columns)
-  #cols.append('PI')
-  #cols.append('label')
-  #print(cols)
   
   df = df.copy()
-  #print(df)
   df = df[df['length'] >= 100]
   df['scov'] = df['length'] / df['slen']
   df = df[df['scov'] >= 0.05 ]
-  #print(df)
   
   ncols = [ 'filename', 'queries', 'saccver', 'stitle', 'pident', 'scov', 's_cov_len', 'slen', 'label' ]
   results_df = pd.DataFrame(columns = ncols)
@@ -179,21 +159,11 @@ def main_bn(df):
     #que_lst = pd.unique(bn_que_hits['qaccver']).tolist() 
     sbj_lst = pd.unique(bn_que_hits['saccver']).tolist()
     
-    #print('sbj_lst', sbj_lst)
-    
     for sbj in sbj_lst:
-      #print('subject', sbj)
       hit_rows = bn_que_hits[ bn_que_hits['saccver'] == sbj ]
       
       # 1） 先判断有无全局匹配，有则跳到下一行
       max_row = check_global_alignment(hit_rows)
-
-      #print(max_row['scov'].item())
-      #print('threshold_global', threshold_global)
-      #print('max_row', max_row)
-      #print("max_row['scov'].iloc[0]", max_row['scov'].iloc[0])
-      #print("max_row['scov'].item()", max_row['scov'].item())
-      #exit()
 
       if max_row['scov'].item() >= threshold_global:
         olst = [ max_row['#bn_query'].item(), max_row['qaccver'].item(), max_row['saccver'].item(), max_row['stitle'].item(), 
@@ -204,24 +174,13 @@ def main_bn(df):
       else: # 2) 
         orow = pd.DataFrame(columns = ncols)
         merge_regs = merge_regions( hit_rows[['sstart','send']] )
-        #print('合并区间merge_regs', merge_regs, '\n')
         
         # 用分号连接所有区间字符串
         interval_strings = merge_regs.apply(lambda row: f"{row['sstart']}-{row['send']}", axis=1)
         result = ";".join(interval_strings)
-        #print('result', result,'\n')
-
         sbj_gene_size = max_row['slen'].item()
-        #print('sbj_gene_size',sbj_gene_size)
-
         scov,s_cov_len = cal_coverage(merge_regs, sbj_gene_size)
-        #print('scov', scov, '\n')
-        #print('s_cov_len', s_cov_len, '\n')
-        
-
         queries = hit_rows['qaccver'].drop_duplicates().str.cat(sep=';')
-        #print(hit_rows[['pident','scov']])
-        #print('query序列', queries, '\n')
         
         # 计算加权平均值（pident 是数据，scov 是权重）
         weighted_avg = np.average(hit_rows['pident'], weights=hit_rows['scov'])
@@ -233,17 +192,8 @@ def main_bn(df):
         olst = [ bn, queries, sbj, refgene_desp,
                  weighted_avg, scov, s_cov_len, sbj_gene_size, 
                  'global' ]
-        #print('olst', olst)
-
         orow = pd.DataFrame( [olst], columns = ncols )  
-        #print('orow', orow)
-
         results_df = pd.concat([results_df, orow], axis = 0)
-        #print('results_df', results_df)
-        #results_df.to_csv('test_out.csv', index=False, encoding='utf-8')
-
-      #print(hit_rows)
-  #print(results_df)
  
   return results_df
 
