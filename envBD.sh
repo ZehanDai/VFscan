@@ -55,6 +55,7 @@ while getopts ":d:" opt; do
             ;;
     esac
 done
+
 check_vfdb_path $VFSCAN/database # 检查是否存在setB_nt.fas
 
 # 3 fasta header信息转表格
@@ -62,6 +63,8 @@ check_vfdb_path $VFSCAN/database # 检查是否存在setB_nt.fas
 [ ! -f $DB_PATH/SetB_anno.txt ] && zcat $DB_PATH/VFDB_setB_nt.fas.gz | grep '^>' > $DB_PATH/SetB_anno.txt
 [ ! -f $DB_PATH/SetB_info.tsv ] && python3 $VFSCAN/utils/process.py $DB_PATH/SetB_anno.txt $DB_PATH/SetB_info.tsv
 [ ! -f $DB_PATH/SetA_info.tsv ] && python3 $VFSCAN/utils/process.py $DB_PATH/SetA_anno.txt $DB_PATH/SetA_info.tsv
+[ ! -f $DB_PATH/VFDB_setA_nt/SetA_info.tsv ] && ln -s $DB_PATH/SetA_info.tsv $DB_PATH/VFDB_setA_nt/SetA_info.tsv
+[ ! -f $DB_PATH/VFDB_setB_nt/SetB_info.tsv ] && ln -s $DB_PATH/SetB_info.tsv $DB_PATH/VFDB_setB_nt/SetB_info.tsv
 
 # 4 检查 blastn
 echo -e "\n=== 检查 BLAST+ 环境 ==="
