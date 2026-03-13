@@ -124,20 +124,20 @@ for fa in `echo ${input_fasta[@]}`; do
 
   # 最优判断
   echo "  "Running besthit calling...
-  [ ! -f $OUTPUT_PATH/$bn.tsv ] && python3 best_hit_calling.py -i $OUTPUT_PATH/$bn.add_hder.fmt6 -o $OUTPUT_PATH/$bn.tsv \
+  [ ! -f $OUTPUT_PATH/$bn.tsv ] && python3 utils/best_hit_calling.py -i $OUTPUT_PATH/$bn.add_hder.fmt6 -o $OUTPUT_PATH/$bn.tsv \
     -s "\t" -S "\t"
 
 
   # 增加VFDB信息
   echo "  "Add VFDB information...
-  [ ! -f $OUTPUT_PATH/$bn.addVFDBinfo.tsv ] && python3 add_VFDB_info.py -i $OUTPUT_PATH/$bn.tsv \
+  [ ! -f $OUTPUT_PATH/$bn.addVFDBinfo.tsv ] && python3 utils/add_VFDB_info.py -i $OUTPUT_PATH/$bn.tsv \
       -o $OUTPUT_PATH/$bn.addVFDBinfo.tsv  \
       -a $REFERENCE_PATH/SetB_info.tsv \
       -s "\t" -S "\t"
   
 done
 
-python3 concat_VFfiles.py -i $OUTPUT_PATH -o $OUTPUT_PATH -s "\t"
+python3 utils/concat_VFfiles.py -i $OUTPUT_PATH -o $OUTPUT_PATH -s "\t"
 
 
  

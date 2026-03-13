@@ -122,5 +122,5 @@ bash batch_blastn_setB.sh -i "$INDIR" -o "$OUTDIR" -r "$REFD"
 Arguments for batch_blastn_setB.sh:
 * -i : Input directory containing FASTA files
 * -o : Output directory (will be created if not exists)
-* -r : (Optional) Path to VFDB_setB_nt directory; defaults to $VFSCAN/database/VFDB_setB_nt
+* -r : Path to VFDB_setB_nt directory
 

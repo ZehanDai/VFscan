@@ -20,6 +20,10 @@ else
     exit 1 
 fi
 
+
+
+
+
 # 2 检查数据库路径及文件
 # 默认VFDB文件在模块路径下的database
 # 如果有传参，则设置传入的数据库路径
@@ -41,6 +45,7 @@ while getopts ":d:" opt; do
     esac
 done
 
+
 wd=`pwd`; cd $DB_PATH
 [ ! -r $DB_PATH/Comparative_tables_from_VFDB ] && unzip Comparative_tables_from_VFDB.zip
 [ ! -f $DB_PATH/VFDB_setA_nt/VFDB_setA_nt.fas ] && unzip VFDB_setA_nt.zip
@@ -48,6 +53,7 @@ wd=`pwd`; cd $DB_PATH
 [ ! -f $DB_PATH/VFDB_setB_nt/VFDB_setB_nt.fas ] && unzip VFDB_setB_nt.zip
 [ ! -f $DB_PATH/VFDB_setB_pro/VFDB_setB_pro.fas ] && unzip VFDB_setB_pro.zip                             
 cd $wd
+
 
 # 3 fasta header信息转表格
 [ ! -f $DB_PATH/SetA_anno.txt ] && zcat $DB_PATH/VFDB_setA_nt.fas.gz | grep '^>' > $DB_PATH/SetA_anno.txt
@@ -68,6 +74,7 @@ else
  fi
 
 # 5 构建blast数据库索引
+
 [ ! -f $DB_PATH/VFDB_setB_nt/VFDB_setB_nt.nin ] && makeblastdb -in $DB_PATH/VFDB_setB_nt/VFDB_setB_nt.fas -out $DB_PATH/VFDB_setB_nt/VFDB_setB_nt -dbtype nucl 
 [ ! -f $DB_PATH/VFDB_setA_nt/VFDB_setA_nt.nin ] && makeblastdb -in $DB_PATH/VFDB_setA_nt/VFDB_setA_nt.fas -out $DB_PATH/VFDB_setA_nt/VFDB_setA_nt -dbtype nucl
 
