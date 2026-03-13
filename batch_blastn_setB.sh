@@ -130,8 +130,10 @@ for fa in `echo ${input_fasta[@]}`; do
 
   # 增加VFDB信息
   echo "  "Add VFDB information...
-  [ ! -f $OUTPUT_PATH/$bn.addVFDBinfo.tsv ] && python3 add_VFDB_info.py -i $OUTPUT_PATH/$bn.tsv -o $OUTPUT_PATH/$bn.addVFDBinfo.tsv  \
-  -s "\t" -S "\t"
+  [ ! -f $OUTPUT_PATH/$bn.addVFDBinfo.tsv ] && python3 add_VFDB_info.py -i $OUTPUT_PATH/$bn.tsv \
+      -o $OUTPUT_PATH/$bn.addVFDBinfo.tsv  \
+      -a $REFERENCE_PATH/SetB_info.tsv \
+      -s "\t" -S "\t"
   
 done
 
