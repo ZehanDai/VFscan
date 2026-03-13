@@ -2,6 +2,8 @@
 # script for setting up VFDB environment
 # usage: bash ./envBD_v0.2.sh or ./envBD.sh -d 新VFSCAN路径
 
+# version 2026-03-13 15:56
+
 
 # color code for checking and alarming 
 RED='\033[0;31m'
