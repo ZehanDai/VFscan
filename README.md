@@ -98,8 +98,8 @@ A tab-separated summary table (.tsv) with the following columns:
 | `Gene_description` | Functional description of the gene |
 | `VF_name` | Virulence factor name (e.g., Flagella) |
 | `taxonomy` | Source organism of the VFDB entry |
-| `fix_iden` | Fixed identity (pident normalized to [0,100]) |
-| `fix+iden` | Fixed identity multiplied by coverage (pident * scov) |
+| `fix_iden` | Fixed identity (average pident weighted by scov) |
+| `fix+iden` | fix_iden converted to positive/negative |
  
 A sample row:
 ```
