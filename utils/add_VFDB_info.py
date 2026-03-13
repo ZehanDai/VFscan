@@ -10,10 +10,6 @@ v 0.2 0818 修正相似度不超100%；
     （注意基于现有最优判断脚本无法判断多拷贝）
 """
 
-#wd='/mnt/f/Projects/09分析支持/20241222复旦肿瘤段老师聚类分析/20241225/asia1387/blastn_VFdb/temp_dir'
-#wd='/mnt/f/Projects/09分析支持/20241222复旦肿瘤段老师聚类分析/20250213_2batch_cmp/blastnVFDB/temp_dir'
-#wd='/mnt/f/Projects/09分析支持/20241222复旦肿瘤段老师聚类分析/20250729/temp_dir'
-
 import pandas as pd
 import os
 import numpy as np
