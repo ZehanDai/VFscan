@@ -12,7 +12,7 @@ NC='\033[0m' # No Color
 # 1 check whether the module path has been set or not
 # 检查全局变量是否设置了模块路径
 if [[ -n "$VFSCAN" ]]; then
-    echo "${GREEN}[SUCCESS]${NC} VFSCAN has been set: $VFSCAN"
+    echo -e "${GREEN}[SUCCESS]${NC} VFSCAN has been set: $VFSCAN"
 else
     echo -e "${RED}[ERROR]${NC} Modude path not found in global environment"
     echo "Example for setting: VFSCAN=/mnt/d/database/VFDB/VFscan_module/VFscan_v0.2; export VFSCAN"
