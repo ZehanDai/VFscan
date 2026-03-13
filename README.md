@@ -112,18 +112,7 @@ text
 ### 1. Run the helper script to verify your setup and reference paths:
 `bash envBD_v0.2.sh`
 
-### 2. Basic run
-```
-bash
-
-INDIR=/path/to/input/fasta_files
-OUTDIR=/path/to/output
-
-bash batch_blastn_setB.sh -i "$INDIR" -o "$OUTDIR"
-```
-This will use the default VFDB database (SetB) included in the package.
-
-### 3. Run with custom database 
+### 2. Run with specific database 
 ```
 bash
 
