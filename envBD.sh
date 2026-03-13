@@ -61,7 +61,7 @@ check_vfdb_path $VFSCAN/database # 检查是否存在setB_nt.fas
 [ ! -f $DB_PATH/SetA_anno.txt ] && zcat $DB_PATH/VFDB_setA_nt.fas.gz | grep '^>' > $DB_PATH/SetA_anno.txt
 [ ! -f $DB_PATH/SetB_anno.txt ] && zcat $DB_PATH/VFDB_setB_nt.fas.gz | grep '^>' > $DB_PATH/SetB_anno.txt
 [ ! -f $DB_PATH/SetB_info.tsv ] && python3 $VFSCAN/utils/process.py $DB_PATH/SetB_anno.txt $DB_PATH/SetB_info.tsv
-
+[ ! -f $DB_PATH/SetA_info.tsv ] && python3 $VFSCAN/utils/process.py $DB_PATH/SetA_anno.txt $DB_PATH/SetA_info.tsv
 
 # 4 检查 blastn
 echo -e "\n=== 检查 BLAST+ 环境 ==="
@@ -70,12 +70,11 @@ if command -v blastn &> /dev/null; then
     echo -e "${GREEN}[SUCCESS]${NC} BLAST+ 已安装: $blast_version"
 else
     echo -e "${RED}[FAIL]${NC} 未找到 blastn 命令"
-    echo -e "please install BLAST+:"
  fi
 
 # 5 构建blast数据库索引
 [ ! -f $DB_PATH/VFDB_setB_nt/VFDB_setB_nt.ndb ] && makeblastdb -in $DB_PATH/VFDB_setB_nt/VFDB_setB_nt.fas -out $DB_PATH/VFDB_setB_nt -dbtype nucl 
-
+[ ! -f $DB_PATH/VFDB_setA_nt/VFDB_setA_nt.ndb ] && makeblastdb -in $DB_PATH/VFDB_setA_nt/VFDB_setA_nt.fas -out $DB_PATH/VFDB_setA_nt -dbtype nucl
 
 # 6 检查 python3
 echo -e "\n=== 检查 Python3 环境 ==="
@@ -105,8 +104,3 @@ else
 fi
 
 echo -e "\n=== 环境检查完成 ===\n"
-
-
-
-
-
