@@ -20,20 +20,6 @@ else
     exit 1 
 fi
 
-check_vfdb_path() {
-    # Function to validate the VFDB database directory structure.
-    # Checks for the presence of a critical database file.
-    local path=$1
-    local critical_file="$path/VFDB_setB_nt/VFDB_setB_nt.fas"
-    
-    if [ -f "$critical_file" ]; then
-        echo -e "${GREEN}[SUCCESS]${NC} Valid VFDB path: $path"
-        return 0
-    else
-        echo -e "${RED}[ERROR]${NC} Critical file 'VFDB_setB_nt.fas' not found in the expected location."
-        return 1
-    fi
-}
 
 # 2 检查数据库路径及文件
 # 默认VFDB文件在模块路径下的database
@@ -56,7 +42,17 @@ while getopts ":d:" opt; do
     esac
 done
 
-check_vfdb_path $VFSCAN/database # 检查是否存在setB_nt.fas
+
+wd=`pwd`; cd $DB_PATH
+if [ -f $DB_PATH/VFDB_setA_nt.zip ] & [ ! -f $DB_PATH/VFDB_setA_nt/VFDB_setA_nt.fas ] ;then
+  unzip VFDB_setA_nt.zip
+fi
+if [ -f $DB_PATH/VFDB_setB_nt.zip ] & [ ! -f $DB_PATH/VFDB_setB_nt/VFDB_setB_nt.fas ] ;then
+if [ -f $DB_PATH/VFDB_setB_nt.zip ] & [ ! -f $DB_PATH/VFDB_setB_nt/VFDB_setB_nt.fas ] ;then
+  unzip VFDB_setB_nt.zip
+fi
+cd $wd
+
 
 # 3 fasta header信息转表格
 [ ! -f $DB_PATH/SetA_anno.txt ] && zcat $DB_PATH/VFDB_setA_nt.fas.gz | grep '^>' > $DB_PATH/SetA_anno.txt
@@ -76,8 +72,8 @@ else
  fi
 
 # 5 构建blast数据库索引
-[ ! -f $DB_PATH/VFDB_setB_nt/VFDB_setB_nt.ndb ] && makeblastdb -in $DB_PATH/VFDB_setB_nt/VFDB_setB_nt.fas -out $DB_PATH/VFDB_setB_nt -dbtype nucl 
-[ ! -f $DB_PATH/VFDB_setA_nt/VFDB_setA_nt.ndb ] && makeblastdb -in $DB_PATH/VFDB_setA_nt/VFDB_setA_nt.fas -out $DB_PATH/VFDB_setA_nt -dbtype nucl
+[ ! -f $DB_PATH/VFDB_setB_nt/VFDB_setB_nt.nin ] && makeblastdb -in $DB_PATH/VFDB_setB_nt/VFDB_setB_nt.fas -out $DB_PATH/VFDB_setB_nt/VFDB_setB_nt -dbtype nucl
+[ ! -f $DB_PATH/VFDB_setA_nt/VFDB_setA_nt.nin ] && makeblastdb -in $DB_PATH/VFDB_setA_nt/VFDB_setA_nt.fas -out $DB_PATH/VFDB_setA_nt/VFDB_setA_nt -dbtype nucl
 
 # 6 检查 python3
 echo -e "\n=== 检查 Python3 环境 ==="
