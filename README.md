@@ -2,14 +2,18 @@
 VFscan is a lightweight pipeline for identifying homologs of virulence factor (VF) genes in genomic assemblies. It integrates BLAST searches against the VFDB database and generates a summarized annotation table.
 
 ## 📌 Version
-* Tool version: 0.2.1
+* Tool version: 0.2.2
 * built-in VFDB database version: 2024-12-27
+* Latest update 2026-03-16
 
 ## ✨ Features
 * Accepts FASTA files (assemblies from WGS or metagenomic data)
 * Automatically runs BLAST against the VFDB core dataset (SetB)
 * Merges BLAST results with VFDB metadata to produce a comprehensive annotation table
 * Supports custom databases with the same directory structure
+
+## Feature update
+* v0.2.2: fix the bug of the "-a" annotation given to add info script
 
 ## ⚙️ Installation
 ### 1. Clone the repository
