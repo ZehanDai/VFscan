@@ -46,7 +46,7 @@ for opt_name,opt_value in opts:
         outsep=opt_value
         outsep=interpret_escape_sequences(outsep)
         #print("output delitmmer",outsep)
-    elif opt_name in ('-S'):
+    elif opt_name in ('-a'):
         reftbl=opt_value
         # print("annotation file")
     elif opt_name in ('-h','--help'):
@@ -59,9 +59,7 @@ for opt_name,opt_value in opts:
             ]))
 
 
-anno_file = "/mnt/d/database/VFDB/SetB_info.tsv"
-
-anno = pd.read_csv(anno_file, sep='\t')
+anno = pd.read_csv(reftbl, sep='\t')
 anno.columns = anno.columns.str.replace(r'\r|\^M', '', regex=True)
 #anno['Reference'] = anno['Reference'].str.replace(r'\r|\^M', '', regex=True)
 #print(anno)

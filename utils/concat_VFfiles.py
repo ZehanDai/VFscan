@@ -70,5 +70,5 @@ matrix = combined_df.pivot_table(
 ouf=oud+"/merge_VFDB_fix_iden_matrix.tsv"
 matrix.fillna(0).to_csv(ouf, sep="\t", float_format="%.6g")
 
-print('Merge all VFDB output to ', ouf )
+print('Merge all VFDB output to ', oud )
 
